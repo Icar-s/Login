@@ -98,7 +98,7 @@ export default function Snake() {
     gameLoopRef.current = setInterval(() => {
       move();
       draw(ctx);
-    }, 120);
+    }, 80);
 
     return () => clearInterval(gameLoopRef.current);
   });

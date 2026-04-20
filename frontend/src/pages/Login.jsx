@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import ReCAPTCHA from "react-google-recaptcha";
 
 export default function Login() {
@@ -58,6 +58,10 @@ export default function Login() {
       </div>
 
       <button onClick={handleLogin}>Entrar</button>
+      
+      <p className="auth-link">
+          Não tem conta? <Link to="/register">Criar conta</Link>
+      </p>
 
       {error && <p style={{ color: "red" }}>{error}</p>}
     </div>

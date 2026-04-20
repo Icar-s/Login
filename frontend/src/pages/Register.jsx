@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 export default function Register() {
   const [email, setEmail] = useState("");
@@ -53,8 +54,12 @@ export default function Register() {
       <br />
 
       <button onClick={handleRegister}>Registrar</button>
+      
 
       {message && <p>{message}</p>}
+      <p className="auth-link">
+        Já tem conta? <Link to="/login">Entrar</Link>
+      </p>
     </div>
   );
 }

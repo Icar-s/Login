@@ -69,6 +69,7 @@ export default function Home() {
 ) : (
   <div className="buttons">
     <Link to="/login">Login</Link>
+    •
     <Link to="/register">Registrar</Link>
   </div>
 )}

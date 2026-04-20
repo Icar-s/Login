@@ -146,3 +146,13 @@ code {
     transform: translateY(-120vh);
   }
 }
+
+.auth-link {
+  margin-top: 15px;
+  font-size: 14px;
+  opacity: 0.8;
+}
+.auth-link a {
+  color: var(--accent);
+  text-decoration: none;
+}

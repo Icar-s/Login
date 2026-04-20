@@ -27,7 +27,7 @@ export default function Register() {
         return;
       }
 
-      setMessage("Usuário criado com sucesso 👍");
+      setMessage("Usuário criado com sucesso ");
     } catch (err) {
       setMessage("Erro de conexão com o servidor");
     }

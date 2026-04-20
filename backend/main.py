@@ -1,6 +1,7 @@
 from fastapi import FastAPI, Depends
 from sqlalchemy.orm import Session
 from database import SessionLocal, engine, Base
+from security import hash_password
 import models, schemas
 
 # Cria todas as tabelas no banco
@@ -28,6 +29,13 @@ def read_root():
 
 @app.post("/register")
 def register(user: schemas.UserCreate, db:Session = Depends(get_db)):
+    # Verifica se email existe
+    existing_user = db.query(models.User).filter(models.User.email == user.email).first()
+    if existing_user:
+        return {"error": "Email já cadastrado"}
+    
+    hashed = hash_password(user.password)
+
     # Cria um novo usuario
     new_user = models.User(
         email=user.email, hashed_password=user.password # Corrigir hash depois

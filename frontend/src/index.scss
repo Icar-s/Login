@@ -109,3 +109,40 @@ code {
   padding: 4px 8px;
   background: var(--code-bg);
 }
+
+.center {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.recaptcha-wrapper {
+  margin: 20px auto;
+  display: flex;
+  justify-content: center;
+}
+
+.bg {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.float-icon {
+  position: absolute;
+  bottom: -50px;
+  animation: floatUp linear forwards;
+}
+
+@keyframes floatUp {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-120vh);
+  }
+}

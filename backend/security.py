@@ -4,6 +4,12 @@ from fastapi.security import OAuth2PasswordBearer
 from datetime import datetime, timedelta
 from passlib.context import CryptContext 
 import hashlib
+import requests
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
 
 SECRET_KEY = "super-secret-key"  # depois vamos esconder isso
 ALGORITHM = "HS256"
@@ -44,3 +50,19 @@ def hash_password(password: str):
 # Função pra verificar senha (vamos usar no login depois)
 def verify_password(plain_password, hashed_password):
     return pwd_context.verify(plain_password, hashed_password)
+
+import requests
+
+def verify_captcha(token: str):
+    secret = os.getenv("RECAPTCHA_SECRET")
+
+    response = requests.post(
+        "https://www.google.com/recaptcha/api/siteverify",
+        data={
+            "secret": secret,
+            "response": token
+        }
+    )
+    return response.json().get("success", False)
+
+print("SECRET:", os.getenv("RECAPTCHA_SECRET"))

@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
+import ReCAPTCHA from "react-google-recaptcha";
 
 function App() {
+  const [captcha, setCaptcha] = useState(null);
+  const [error, setError] = useState("");
   const [user, setUser] = useState(null);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -33,18 +36,28 @@ useEffect(() => {
 
   const handleLogin = async () => {
 
+    setError(""); // limpa erro antigo
+
     const response = await fetch(`${API_URL}/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({
+        email,
+        password,
+        captcha,
+      }),
     });
 
     const data = await response.json();
 
+    if (!response.ok || data.error) {
+      setError(data.error || "Erro ao fazer login");
+      return;
+    }
+    
     console.log("LOGIN:", data);
-
     if (data.access_token) {
       localStorage.setItem("token", data.access_token);
 
@@ -52,6 +65,7 @@ useEffect(() => {
       const me = await getMe(data.access_token);
       setUser(me);
   }
+  
 };
 
   const handleRegister = async () => {
@@ -68,20 +82,15 @@ useEffect(() => {
   };
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
+  const token = localStorage.getItem("token");
 
   if (token) {
     getMe(token).then((data) => {
-      if (!data.detail) {
-        setUser(data);
-      } else {
-        localStorage.removeItem("token");
-      }
+      if (!data.detail) setUser(data);
+      else localStorage.removeItem("token");
     });
   }
-
-  console.log("USER ATUALIZOU:", user);
-}, [user]);
+}, []);
 
 const handleLogout = () => {
   localStorage.removeItem("token");
@@ -110,7 +119,10 @@ const handleLogout = () => {
           />
 
           <br />
-
+          <ReCAPTCHA
+            sitekey="6Ld4YcAsAAAAAIz3czEmVmhYpWAIA5l9xmqpNSdd"
+            onChange={(value) => setCaptcha(value)}
+          />
           <button onClick={handleLogin}>Login</button>
           <button onClick={handleRegister}>Registrar</button>
         </>
@@ -119,6 +131,12 @@ const handleLogout = () => {
           <h2>Logado como: {user.user}</h2>
           <button onClick={handleLogout}>Logout</button>
         </div>
+        
+      )}
+      {error && (
+        <p style={{ color: "red" }}>
+          {error}
+        </p>
       )}
     </div>
   );

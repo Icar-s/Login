@@ -1,3 +1,15 @@
-*.env
-*.tmp
-*.exe
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Ambiente virtual
+venv/
+.env/
+
+# IDE
+.vscode/
+.idea/
+
+# Sistema
+.DS_Store

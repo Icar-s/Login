@@ -1,4 +1,9 @@
 from fastapi import FastAPI
+from database import engine, Base
+import models
+
+# Cria todas as tabelas no banco
+Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 

@@ -1,4 +1,5 @@
 from passlib.context import CryptContext 
+import hashlib
 
 # Configura o algoritmo de hash
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")

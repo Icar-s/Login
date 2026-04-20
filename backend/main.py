@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Depends
 from sqlalchemy.orm import Session
 from database import SessionLocal, engine, Base
-from security import hash_password
+from security import hash_password, verify_password
 import models, schemas
 
 # Cria todas as tabelas no banco
@@ -38,7 +38,7 @@ def register(user: schemas.UserCreate, db:Session = Depends(get_db)):
 
     # Cria um novo usuario
     new_user = models.User(
-        email=user.email, hashed_password=user.password # Corrigir hash depois
+        email=user.email, hashed_password=hashed # Corrigir hash depois
     )
 
     # Adiciona no banco
@@ -47,3 +47,17 @@ def register(user: schemas.UserCreate, db:Session = Depends(get_db)):
     db.refresh(new_user)
 
     return {"message": "Usuário criado com sucesso"}
+
+@app.post("/login")
+def login(user: schemas.UserLogin, db: Session = Depends(get_db)):
+     # procura usuário pelo email
+    db_user = db.query(models.User).filter(models.User.email == user.email).first()
+
+    if not db_user:
+        return {"error": "Email ou senha inválidos"}
+
+    # verifica senha
+    if not verify_password(user.password, db_user.hashed_password):
+        return {"error": "Email ou senha inválidos"}
+
+    return {"message": "Login realizado com sucesso"}

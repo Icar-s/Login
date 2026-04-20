@@ -1,0 +1,91 @@
+Login System Fullstack
+
+- Sistema completo de autenticação com frontend, backend e banco de dados em produção.
+
+- Sobre o projeto:
+
+    Este projeto implementa um sistema de login e registro com autenticação JWT, proteção contra bots com reCAPTCHA e banco de dados PostgreSQL em ambiente de produção.
+
+    O objetivo foi construir e entender um fluxo completo de aplicação web moderna, incluindo deploy real de frontend e backend.
+
+- Tecnologias utilizadas
+
+    -Frontend
+
+    React + Vite
+    React Router DOM
+    SCSS
+    Google reCAPTCHA
+    LocalStorage para persistência de token
+
+    -Backend
+
+    FastAPI (Python)
+    SQLAlchemy ORM
+    JWT Authentication
+    bcrypt para hash de senhas
+    CORS middleware
+    Banco de dados
+    PostgreSQL em produção
+    SQLAlchemy como ORM
+
+    -Deploy
+
+    Backend hospedado no Render
+    Frontend hospedado na Vercel
+    Funcionalidades
+    Cadastro de usuários
+    Login com autenticação JWT
+    Proteção contra bots com reCAPTCHA
+    Rota protegida /me
+    Persistência de sessão via token
+    Logout via frontend
+    Comunicação frontend e backend em produção
+
+-Como rodar o projeto
+    
+    -Backend
+
+    cd backend
+    pip install -r requirements.txt
+    uvicorn main:app --reload
+
+Crie um arquivo .env:
+
+DATABASE_URL=postgresql://user:password@host:port/db
+SECRET_KEY=sua_chave_jwt
+Frontend
+cd frontend
+npm install
+npm run dev
+
+Crie um arquivo .env:
+
+VITE_API_URL=http://localhost:8000
+Deploy
+Backend hospedado no Render
+Frontend hospedado na Vercel
+Comunicação via API pública
+CORS configurado para múltiplos ambientes
+Aprendizados
+
+Durante o desenvolvimento foram resolvidos problemas reais de produção:
+
+Configuração de CORS entre domínios diferentes
+Migração de SQLite para PostgreSQL
+Erros de variáveis de ambiente em deploy
+Integração frontend e backend em produção
+Debug de erros em ambiente cloud (logs do Render)
+Configuração de autenticação JWT
+Problemas enfrentados
+Configuração incorreta de SQLite em ambiente PostgreSQL
+Variáveis de ambiente ausentes no deploy
+Erros de CORS entre Vercel e Render
+Dependências faltando no Pydantic (email-validator)
+Bugs de importação no React
+Status do projeto
+
+Finalizado e funcional em produção.
+
+Autor - Icaro Santos
+Projeto desenvolvido para estudo de desenvolvimento fullstack e deploy de aplicações web reais.
